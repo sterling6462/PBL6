@@ -1,6 +1,6 @@
 $primary_dark: #098edf;
 $hover: #f6f6f6;
-$basic-color: #F66B0E;
+$basic-color: #f66b0e;
 
 @mixin text-style($fontW, $fontS, $lineH, $letterS) {
   font-weight: $fontW;
@@ -25,17 +25,9 @@ $basic-color: #F66B0E;
 }
 
 .SideMenu {
-  & .logo {
-    width: 100%;
-
-    & .img {
-      @include setSizeBox(208px, 64px);
-      margin: 24px;
-    }
-  }
-
   & .list {
     width: 100%;
+    padding-top: 3rem;
     max-width: 360;
     padding-left: 8px;
     text-decoration: none;
@@ -144,11 +136,6 @@ $basic-color: #F66B0E;
       @include flex(center);
       @include text-style(500, 11px, 16px, 0.01em);
       padding-left: 14px;
-    }
-
-    & .IconToggle {
-      width: 21px;
-      fill: #000000;
     }
   }
 }
