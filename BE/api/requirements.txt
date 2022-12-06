@@ -1,0 +1,8 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+cloudinary
+django-cloudinary-storage
+tensorflow
+opencv-python
+Pillow

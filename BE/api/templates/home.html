@@ -4,9 +4,77 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mushroom classification</title>
+    <title>Mushroom Classification</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+
+      .banner {
+        width: 100%;
+        height: calc(100vh - 20px);
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+          ),
+          url("https://static.vecteezy.com/system/resources/previews/003/230/539/non_2x/mushrooms-in-the-forest-background-free-vector.jpg");
+        background-size: cover;
+        background-position: center;
+        padding-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+      }
+
+      .header {
+        font-size: 40px;
+        font-weight: 600;
+        margin-left: 20px;
+      }
+
+      .desc {
+        width: 70%;
+        text-align: center;
+        font-size: 14px;
+        margin: 20px 0px;
+      }
+
+      a {
+        width: 200px;
+        padding: 10px 0px;
+        text-align: center;
+        border-radius: 25px;
+        border: 2px solid #009688;
+        color: #fff;
+        cursor: pointer;
+        position: relative;
+        background-color: transparent;
+        font-size: 20px;
+        overflow: hidden;
+      }
+
+      a:hover {
+        background-color: #009688;
+      }
+    </style>
   </head>
   <body>
-    <h1>Home</h1>
+    <div class="banner">
+      <p class="header">Mushroom Classification</p>
+      <p class="desc">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo qui
+        delectus officia voluptas unde dolores voluptatibus dolorum labore
+        accusamus. Veniam, ma gnam. Inventore, non, aspernatur incidunt omnis
+        veritatis quaerat temporibus nam minus vero aperiam alias sint beatae!
+        Dolorum iusto tempore magni!
+      </p>
+      <a href="http://127.0.0.1:8000/admin" style="text-decoration: none"
+        >Admin Page</a
+      >
+    </div>
   </body>
 </html>
