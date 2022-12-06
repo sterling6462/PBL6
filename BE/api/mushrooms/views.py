@@ -1,9 +1,17 @@
+import os
+from io import BytesIO
+
+import cv2
+import numpy as np
+import tensorflow as tf
+from django.http import Http404
+from keras.models import load_model
 from mushrooms.serializers import CategorySerializer, MushroomSerializer
-from .models import *
+from PIL import Image
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import Http404
-# Create your views here.
+
+from .models import *
 
 
 class CategoriesList(APIView):
@@ -48,6 +56,17 @@ class MushroomDetail(APIView):
 
 class MushroomPredict(APIView):
     def post(self, request, format=None):
-        image = request.FILES["file"]
-        print(image)
-        return Response({"Success": "dkfhjkhjfk"})
+        class_names = ['Blue mycena', 'Cortinarius violaceus', 'Favolaschia calocera', 'Nấm hầu thủ', 'Nấm hương', 'Nấm kim châm',
+                       'Nấm mỡ', 'Nấm mộc nhĩ', 'Nấm độc tán trắng', 'Nấm độc đỏ', 'Nấm đùi gà', 'Podostroma cornu-damae']
+        img_path = request.FILES["file"]
+        img = Image.open(img_path)
+        img_array = tf.keras.preprocessing.image.img_to_array(img)
+        resized_img = cv2.resize(img_array, (256, 256))
+        ready_img = np.expand_dims(resized_img, axis=0)
+        file_name = os.path.dirname("./model_12classes.h5")
+        model = load_model("model_12classes.h5")
+        predictions = model.predict(ready_img)
+        predicted_class = class_names[np.argmax(predictions[0])]
+        confidence = np.max(predictions[0])
+
+        return Response({"class": predicted_class, "confidence": float(confidence)})
