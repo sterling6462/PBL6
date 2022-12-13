@@ -12,11 +12,12 @@ import LoginSVG from "../assets/Svg/login.svg";
 import Colors from "../constants/Colors";
 
 import axios from "axios";
-import { useState } from "react";
+import {useState} from "react";
 import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({navigation}) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -26,10 +27,15 @@ const LoginScreen = ({ navigation }) => {
         username,
         password,
       })
-      .then((res) => {
+      .then(async (res) => {
         let userInfo = res.data;
-        navigation.navigate("Home");
-        console.log(userInfo);
+        navigation.navigate("Tab");
+        console.log(userInfo.access);
+        try {
+          await AsyncStorage.setItem("access", userInfo.access);
+        } catch (e) {
+          console.log("error hai", e);
+        }
       })
       .catch((e) => {
         console.log(`Register failed: ${e}`);
@@ -38,12 +44,12 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ paddingHorizontal: 25 }}>
-        <View style={{ alignItems: "center" }}>
+      <View style={{paddingHorizontal: 25}}>
+        <View style={{alignItems: "center"}}>
           <LoginSVG
             height={300}
             width={300}
-            style={{ transform: [{ rotate: "-5deg" }] }}
+            style={{transform: [{rotate: "-5deg"}]}}
           />
         </View>
         <Text style={styles.textLogin}>Login</Text>
@@ -55,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
               name="alternate-email"
               size={20}
               color={Colors.darkGray}
-              style={{ marginRight: 5 }}
+              style={{marginRight: 5}}
             />
           }
           keyboardType="email-address"
@@ -70,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
               name="ios-lock-closed-outline"
               size={20}
               color={Colors.darkGray}
-              style={{ marginRight: 5 }}
+              style={{marginRight: 5}}
             />
           }
           inputType="password"
@@ -88,7 +94,9 @@ const LoginScreen = ({ navigation }) => {
 
         <View style={styles.transRegister}>
           <Text>New to the app?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("RegisterScreen")}
+          >
             <Text style={styles.textRegister}> Register</Text>
           </TouchableOpacity>
         </View>
@@ -110,7 +118,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     marginBottom: 30,
   },
-  textRegister: { color: Colors.primary, fontWeight: "700" },
+  textRegister: {color: Colors.primary, fontWeight: "700"},
   transRegister: {
     flexDirection: "row",
     justifyContent: "center",

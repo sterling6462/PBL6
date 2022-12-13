@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -18,7 +18,7 @@ import RegistrationSVG from "../assets/Svg/registration.svg";
 import CustomButton from "../components/CustomButton";
 import Colors from "../constants/Colors";
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({navigation}) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -30,7 +30,7 @@ const RegisterScreen = ({ navigation }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        navigation.navigate("Login");
+        navigation.navigate("LoginScreen");
         console.log(userInfo);
       })
       .catch((e) => {
@@ -42,13 +42,13 @@ const RegisterScreen = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ paddingHorizontal: 25 }}
+        style={{paddingHorizontal: 25}}
       >
-        <View style={{ alignItems: "center" }}>
+        <View style={{alignItems: "center"}}>
           <RegistrationSVG
             height={300}
             width={300}
-            style={{ transform: [{ rotate: "-5deg" }] }}
+            style={{transform: [{rotate: "-5deg"}]}}
           />
         </View>
 
@@ -78,7 +78,7 @@ const RegisterScreen = ({ navigation }) => {
               name="alternate-email"
               size={20}
               color={Colors.darkGray}
-              style={{ marginRight: 5 }}
+              style={{marginRight: 5}}
             />
           }
           keyboardType="email-address"
@@ -93,7 +93,7 @@ const RegisterScreen = ({ navigation }) => {
               name="ios-lock-closed-outline"
               size={20}
               color={Colors.darkGray}
-              style={{ marginRight: 5 }}
+              style={{marginRight: 5}}
             />
           }
           inputType="password"
@@ -121,7 +121,7 @@ const RegisterScreen = ({ navigation }) => {
 
         <View style={styles.transLogin}>
           <Text>Already registered?</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
             <Text style={styles.textLogin}> Login</Text>
           </TouchableOpacity>
         </View>
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     marginBottom: 30,
   },
-  textLogin: { color: Colors.primary, fontWeight: "700" },
+  textLogin: {color: Colors.primary, fontWeight: "700"},
   helperTextRegister: {
     textAlign: "center",
     color: Colors.darkGray,

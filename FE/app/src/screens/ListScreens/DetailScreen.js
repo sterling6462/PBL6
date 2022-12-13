@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Colors from "../../constants/Colors";
+import MyHeader from "../../components/MyHeader";
 
-const DetailScreen = ({ route }) => {
+const DetailScreen = ({route, navigation}) => {
   const item = route.params;
 
   return (
@@ -21,6 +22,11 @@ const DetailScreen = ({ route }) => {
         alignItems: "center",
       }}
     >
+      <MyHeader
+        menu
+        onPressMenu={() => navigation.goBack()}
+        title={route.name}
+      />
       <ImageBackground
         style={{
           flex: 0.7,
@@ -41,10 +47,10 @@ const DetailScreen = ({ route }) => {
           >
             {item.mushroom_name}
           </Text>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{flexDirection: "row"}}>
             <Icon name="star" size={30} color={Colors.yellow} />
             <Text
-              style={{ color: Colors.label, fontWeight: "bold", fontSize: 20 }}
+              style={{color: Colors.label, fontWeight: "bold", fontSize: 20}}
             >
               5.0
             </Text>
@@ -55,7 +61,7 @@ const DetailScreen = ({ route }) => {
         <View style={style.iconContainer}>
           <Icon name="favorite" color={Colors.red} size={30} />
         </View>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
+        <View style={{flexDirection: "row", marginTop: 10}}>
           <Icon name="place" size={28} color={Colors.primary} />
           <Text
             style={{
@@ -68,26 +74,15 @@ const DetailScreen = ({ route }) => {
             Đà Nẵng
           </Text>
         </View>
-        <Text style={{ marginTop: 20, fontWeight: "bold", fontSize: 20 }}>
+        <Text style={{marginTop: 20, fontWeight: "bold", fontSize: 20}}>
           Thông tin chi tiết
         </Text>
-        <Text style={{ marginTop: 20, lineHeight: 22 }}>
-          {item.description}
-        </Text>
+        <Text style={{marginTop: 20, lineHeight: 22}}>{item.description}</Text>
       </View>
     </SafeAreaView>
   );
 };
 const style = StyleSheet.create({
-  bookNowBtn: {
-    height: 50,
-    width: 150,
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   iconContainer: {
     height: 60,
     width: 60,
@@ -108,6 +103,7 @@ const style = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: Colors.bag3Bg,
     flex: 0.3,
+    width: "100%",
   },
   header: {
     marginTop: 60,
