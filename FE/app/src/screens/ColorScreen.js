@@ -34,7 +34,7 @@ export default function ColorScreen({ route, navigation }) {
 
   useEffect(() => {
     axios
-      .get(`http://103.197.184.82:8000/api/mushrooms`)
+      .get(`http://103.197.184.93:8000/api/mushrooms`)
       .then((res) => {
         setData(res.data);
       })

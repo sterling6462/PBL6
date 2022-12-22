@@ -16,11 +16,7 @@ const ProfileScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <MyHeader
-        menu
-        onPressMenu={() => navigation.goBack()}
-        title={route.name}
-      />
+      <MyHeader title={route.name} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={{

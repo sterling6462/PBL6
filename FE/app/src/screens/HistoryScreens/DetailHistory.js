@@ -10,7 +10,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import MyHeader from "../../components/MyHeader";
 import Colors from "../../constants/Colors";
 
-const DetailScreen = ({ route, navigation }) => {
+const DetailHistory = ({ route, navigation }) => {
   const item = route.params;
 
   return (
@@ -28,6 +28,7 @@ const DetailScreen = ({ route, navigation }) => {
           flex: 0.7,
           width: 350,
           height: 350,
+          borderRadius: 8,
         }}
         source={{ uri: item.image }}
       >
@@ -40,7 +41,7 @@ const DetailScreen = ({ route, navigation }) => {
               marginBottom: 20,
             }}
           >
-            {item.name}
+            {item.mushroom.name}
           </Text>
         </View>
       </ImageBackground>
@@ -58,7 +59,9 @@ const DetailScreen = ({ route, navigation }) => {
         >
           Thông tin chi tiết
         </Text>
-        <Text style={{ marginTop: 20, lineHeight: 22 }}>{item.desc}</Text>
+        <Text style={{ marginTop: 20, lineHeight: 22 }}>
+          {item.mushroom.desc}
+        </Text>
       </View>
     </SafeAreaView>
   );
@@ -114,4 +117,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default DetailScreen;
+export default DetailHistory;

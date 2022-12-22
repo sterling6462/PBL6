@@ -12,14 +12,15 @@ const CardList = (props) => {
       }}
     >
       <Image
-        //TODO edit item.image
-        source={require("../assets/mushroom.jpg")}
+        source={{ uri: item.image }}
         style={styles.img}
         defaultSource={require("../assets/mushroom.jpg")}
       />
       <View style={styles.content}>
-        <Text style={styles.label}>{item.mushroom_name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.label}>{item.name}</Text>
+        <Text style={styles.description}>
+          {`${item.desc}`.slice(0, 130)} ...
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -41,11 +42,12 @@ const styles = StyleSheet.create({
   img: {
     width: 80,
     height: 80,
+    borderRadius: 16,
   },
   content: {
     height: 100,
     marginLeft: 15,
-    paddingVertical: 10,
+    paddingVertical: 5,
     flex: 1,
   },
   label: {
