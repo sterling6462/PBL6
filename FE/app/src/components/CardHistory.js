@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
 
 const CardHistory = (props) => {
@@ -8,12 +8,19 @@ const CardHistory = (props) => {
     <TouchableOpacity
       style={styles.cardContainer}
       onPress={() => {
-        navigation.navigate("DetailScreen", item);
+        navigation.navigate("DetailHistory", item);
       }}
     >
+      <Image
+        //TODO edit item.image
+        source={{ uri: item.image }}
+        style={styles.img}
+        defaultSource={require("../assets/mushroom.jpg")}
+      />
       <View style={styles.content}>
-        <Text style={styles.label}>{item.mushroom_name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.label}>{item.mushroom.name}</Text>
+        <Text style={styles.accuracy}>{`${item.accuracy}`} %</Text>
+        <Text style={styles.date}>{item.date}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -32,6 +39,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
+    shadowColor: Colors.bag12Bg,
   },
   img: {
     width: 80,
@@ -47,6 +55,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     color: Colors.label,
+    paddingBottom: 5,
   },
   description: {
     fontSize: 13,

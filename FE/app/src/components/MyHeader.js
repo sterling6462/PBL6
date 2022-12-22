@@ -1,75 +1,53 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Badge, Surface, Title } from "react-native-paper";
-import Feather from "react-native-vector-icons/Feather";
+import { StyleSheet, Text, View } from "react-native";
+import { Surface } from "react-native-paper";
+import { LogoutSvg } from "../assets/Svg";
+import Colors from "../constants/Colors";
 
 const IconSize = 24;
 
-const AppHeader = ({
-  style,
-  menu,
-  onPressMenu,
-  back,
-  onPressBack,
-  title,
-  right,
-  rightComponent,
-  onRightPress,
-  optionalBtn,
-  optionalBtnPress,
-  headerBg = "white",
-  iconColor = "black",
-  titleAlight,
-  optionalBadge,
-}) => {
+const AppHeader = ({ style, name = "Addd", title }) => {
   const LeftView = () => (
-    <View style={styles.view}>
-      {menu && (
-        <TouchableOpacity onPress={onPressMenu}>
-          <Feather name="menu" size={IconSize} color={iconColor} />
-        </TouchableOpacity>
-      )}
-      {back && (
-        <TouchableOpacity onPress={onPressBack}>
-          <Feather name="arrow-left" size={IconSize} color={iconColor} />
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-  const RightView = () =>
-    rightComponent ? (
-      rightComponent
-    ) : (
-      <View style={[styles.view, styles.rightView]}>
-        {optionalBtn && (
-          <TouchableOpacity style={styles.rowView} onPress={optionalBtnPress}>
-            <Feather name={optionalBtn} size={IconSize} color={iconColor} />
-            {optionalBadge && (
-              <Badge style={{ position: "absolute", top: -5, right: -10 }}>
-                {optionalBadge}
-              </Badge>
-            )}
-          </TouchableOpacity>
-        )}
-        {right !== "" && (
-          <TouchableOpacity onPress={onRightPress}>
-            <Feather name={right} size={IconSize} color={iconColor} />
-          </TouchableOpacity>
-        )}
+    <View style={styles.header}>
+      <View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ fontSize: 25, fontWeight: "bold", marginBottom: 10 }}>
+            Xin chào
+          </Text>
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: "bold",
+              marginBottom: 10,
+              color: Colors.label,
+            }}
+          >
+            {" "}
+            {name}
+          </Text>
+        </View>
+        <Text
+          style={{
+            fontSize: 30,
+            color: Colors.primaryDark,
+            fontWeight: "bold",
+          }}
+        >
+          {title} Screen
+        </Text>
       </View>
-    );
-  const TitleView = () => (
-    <View style={styles.titleView}>
-      <Title style={{ color: iconColor, textAlign: titleAlight }}>
-        {title}
-      </Title>
     </View>
   );
+  const RightView = () => (
+    <View style={[styles.view, styles.rightView]}>
+      <LogoutSvg width={IconSize} height={IconSize} color={Colors.red} />
+    </View>
+  );
+
   return (
-    <Surface style={[styles.header, style, { backgroundColor: headerBg }]}>
-      <LeftView back />
-      <TitleView />
-      <RightView />
+    <Surface style={[styles.header, style]}>
+      <LeftView />
+      <RightView name />
     </Surface>
   );
 };
@@ -78,19 +56,15 @@ export default AppHeader;
 
 const styles = StyleSheet.create({
   header: {
-    height: 50,
-    elevation: 4,
+    paddingHorizontal: 10,
+    height: 120,
+    paddingTop: 10,
     justifyContent: "space-between",
-    alignItems: "center",
     flexDirection: "row",
   },
   view: {
     marginHorizontal: 16,
     alignItems: "center",
-    flexDirection: "row",
-  },
-  titleView: {
-    flex: 1,
   },
   rightView: {
     justifyContent: "flex-end",

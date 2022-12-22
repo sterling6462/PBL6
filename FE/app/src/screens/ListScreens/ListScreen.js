@@ -23,11 +23,7 @@ const ListScreen = (props) => {
 
   return (
     <View style={Styles.container}>
-      <MyHeader
-        menu
-        onPressMenu={() => navigation.goBack()}
-        title={route.name}
-      />
+      <MyHeader title={route.name} />
 
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>

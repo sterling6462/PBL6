@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Colors from "../../constants/Colors";
-import ColorScreen from "../../screens/ColorScreen";
-import HistoryScreen from "../../screens/HistoryScreen";
+import HistoryScreen from "../../screens/HistoryScreens/HistoryScreen";
+import HomeScreen from "../../screens/HomeScreen";
 import ListScreen from "../../screens/ListScreens/ListScreen";
 import ProfileScreen from "../../screens/ProfileScreen";
 import { ScanMushroomScreen } from "../../screens/ScanMushroomsScreen";
@@ -72,7 +72,7 @@ export default function AnimTab() {
       <Tab.Screen
         key={1}
         name="Home"
-        component={ColorScreen}
+        component={HomeScreen}
         options={{
           tabBarShowLabel: false,
           tabBarButton: (props) => (

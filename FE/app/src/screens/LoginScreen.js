@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
         let userInfo = res.data;
         navigation.navigate("Tab");
         // login();
-        console.log(userInfo.access);
+        // console.log(userInfo.access);
         try {
           await AsyncStorage.setItem("access", userInfo.access);
         } catch (e) {

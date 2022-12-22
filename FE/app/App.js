@@ -10,13 +10,13 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from "react-native";
 import { Provider } from "react-native-paper";
 import AnimTab from "./src/components/navigation/AnimTab";
 import Colors from "./src/constants/Colors";
+import DetailHistory from "./src/screens/HistoryScreens/DetailHistory";
 import DetailScreen from "./src/screens/ListScreens/DetailScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
@@ -47,7 +47,6 @@ export default function App() {
   if (loaded == false)
     return (
       <View style={styles.splash}>
-        <Text style={styles.textWelcome}>Hi</Text>
         <AnimatedLottieView
           source={require("./src/assets/splash.json")}
           autoPlay
@@ -105,6 +104,11 @@ const RootStack = () => {
       <Stack.Screen
         name="DetailScreen"
         component={DetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailHistory"
+        component={DetailHistory}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -15,7 +15,6 @@ export default {
   lightRed: "#ff4f7e",
   darkRed: "#d9365e",
   purple: "#8f06e4",
-  skyBlue: "skyblue",
   yellow: "#f8c907",
   pink: "#ff4c98",
   gold: "gold",

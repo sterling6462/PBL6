@@ -12,7 +12,6 @@ const CardList = (props) => {
       }}
     >
       <Image
-        //TODO edit item.image
         source={{ uri: item.image }}
         style={styles.img}
         defaultSource={require("../assets/mushroom.jpg")}
@@ -43,6 +42,7 @@ const styles = StyleSheet.create({
   img: {
     width: 80,
     height: 80,
+    borderRadius: 16,
   },
   content: {
     height: 100,

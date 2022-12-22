@@ -31,7 +31,6 @@ const RegisterScreen = ({ navigation }) => {
       .then((res) => {
         let userInfo = res.data;
         navigation.navigate("LoginScreen");
-        console.log(userInfo);
       })
       .catch((e) => {
         console.log(`Register failed: ${e}`);
