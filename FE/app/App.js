@@ -1,10 +1,11 @@
-import {NavigationContainer} from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
 import AnimatedLottieView from "lottie-react-native";
-import React, {useState, useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -13,13 +14,12 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import {Provider} from "react-native-paper";
-import AnimTab from "./src/components/BottomTab/AnimTab";
+import { Provider } from "react-native-paper";
+import AnimTab from "./src/components/navigation/AnimTab";
 import Colors from "./src/constants/Colors";
 import DetailScreen from "./src/screens/ListScreens/DetailScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";
@@ -49,7 +49,7 @@ export default function App() {
       <View style={styles.splash}>
         <Text style={styles.textWelcome}>Hi</Text>
         <AnimatedLottieView
-          source={require("./assets/splash.json")}
+          source={require("./src/assets/splash.json")}
           autoPlay
           duration={3000}
           loop={false}
@@ -90,22 +90,22 @@ const RootStack = () => {
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="RegisterScreen"
         component={RegisterScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Tab"
         component={AnimTab}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="DetailScreen"
         component={DetailScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -125,5 +125,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  splash: {flex: 1, alighItems: "center"},
+  splash: { flex: 1, alighItems: "center" },
 });

@@ -60,7 +60,7 @@ export const ScanMushroomScreen = ({ route, navigation }) => {
       )
     );
 
-    fetch("http://103.197.184.82:8000/api/predict", {
+    fetch("http://103.197.184.93:8000/api/predict", {
       method: "post",
       body: formData,
       headers: {

@@ -1,18 +1,18 @@
-import { useEffect, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import * as Animatable from "react-native-animatable";
-import Styles from "../common/Styles";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MyHeader from "../components/MyHeader";
+import Colors from "../constants/Colors";
 
 const ProfileScreen = ({ route, navigation }) => {
-  const viewRef = useRef(null);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      viewRef.current.animate({ 0: { opacity: 0.5 }, 1: { opacity: 1 } });
-    });
-    return () => unsubscribe;
-  }, [navigation]);
+  // const logout = () => {
+  //   AsyncStorage.clear();
+  // };
 
   return (
     <View>
@@ -20,19 +20,52 @@ const ProfileScreen = ({ route, navigation }) => {
         menu
         onPressMenu={() => navigation.goBack()}
         title={route.name}
-        // onRightPress={() => console.log("right")}
       />
-      <Animatable.View
-        ref={viewRef}
-        easing={"ease-in-out"}
-        style={Styles.container}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        showsVerticalScrollIndicator={false}
       >
-        <Text>ProfileScreen</Text>
-      </Animatable.View>
+        <Image
+          style={styles.userImg}
+          source={require("../assets/mushroom.jpg")}
+        />
+        <Text style={styles.userName}>Nhuw Ngocj</Text>
+        <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
+          <Text style={styles.userBtnTxt}>Logout</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
 
 export default ProfileScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  userImg: {
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  userBtn: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
+    borderWidth: 2,
+    borderRadius: 3,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginHorizontal: 5,
+  },
+});

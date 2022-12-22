@@ -1,18 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import Styles from "../../common/Styles";
-import CardList from "../../components/CardList";
-import MyHeader from "../../components/MyHeader";
-import Colors from "../../constants/Colors";
+import CardHistory from "../components/CardHistory";
+import MyHeader from "../components/MyHeader";
+import Colors from "../constants/Colors";
 
-const ListScreen = (props) => {
-  const { route, navigation } = props;
+const HistoryScreen = ({ route, navigation }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://103.197.184.93:8000/api/mushrooms`)
+      .get(`http://103.197.184.93:8000/api/history`)
       .then((res) => {
         setData(res.data);
       })
@@ -22,17 +20,17 @@ const ListScreen = (props) => {
   }, []);
 
   return (
-    <View style={Styles.container}>
+    <View>
       <MyHeader
         menu
         onPressMenu={() => navigation.goBack()}
         title={route.name}
+        // onRightPress={() => console.log("right")}
       />
-
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>
           {data.map((item, index) => (
-            <CardList
+            <CardHistory
               item={item}
               id={index}
               key={index}
@@ -45,6 +43,8 @@ const ListScreen = (props) => {
   );
 };
 
+export default HistoryScreen;
+
 const styles = StyleSheet.create({
   viewInner: {
     backgroundColor: Colors.bag12Bg,
@@ -54,5 +54,3 @@ const styles = StyleSheet.create({
     marginBottom: 72,
   },
 });
-
-export default ListScreen;
