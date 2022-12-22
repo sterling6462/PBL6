@@ -43,7 +43,7 @@ const ListScreen = (props) => {
 
 const styles = StyleSheet.create({
   viewInner: {
-    backgroundColor: Colors.bag12Bg,
+    backgroundColor: Colors.white,
     flex: 1,
   },
   ScrollView: {

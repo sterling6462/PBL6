@@ -82,11 +82,10 @@ export default HistoryScreen;
 
 const styles = StyleSheet.create({
   viewInner: {
-    backgroundColor: Colors.bag12Bg,
+    backgroundColor: Colors.white,
   },
   ScrollView: {
     marginBottom: 72,
-    backgroundColor: Colors.bag12Bg,
     width: WINDOW_WIDTH,
     height: WINDOW_HEIGHT,
   },

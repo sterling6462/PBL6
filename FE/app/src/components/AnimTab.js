@@ -2,14 +2,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
-import Colors from "../../constants/Colors";
-import HistoryScreen from "../../screens/HistoryScreens/HistoryScreen";
-import HomeScreen from "../../screens/HomeScreen";
-import ListScreen from "../../screens/ListScreens/ListScreen";
-import ProfileScreen from "../../screens/ProfileScreen";
-import { ScanMushroomScreen } from "../../screens/ScanMushroomsScreen";
-import Icon, { Icons } from "../Icons";
-import Scan from "../Scan";
+import Colors from "../constants/Colors";
+import HistoryScreen from "../screens/HistoryScreens/HistoryScreen";
+import HomeScreen from "../screens/HomeScreen";
+import ListScreen from "../screens/ListScreens/ListScreen";
+import { ScanMushroomScreen } from "../screens/ScanMushroomsScreen";
+import Icon, { Icons } from "./Icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -94,9 +92,9 @@ export default function AnimTab() {
           tabBarButton: (props) => (
             <TabButton
               {...props}
-              type={Icons.MaterialCommunityIcons}
-              activeIcon="heart-plus"
-              inActiveIcon="heart-plus-outline"
+              type={Icons.FontAwesome}
+              activeIcon="list-ul"
+              inActiveIcon="list-ul"
             />
           ),
         }}
@@ -107,7 +105,14 @@ export default function AnimTab() {
         component={ScanMushroomScreen}
         options={{
           tabBarShowLabel: false,
-          tabBarButton: (props) => <Scan {...props} />,
+          tabBarButton: (props) => (
+            <TabButton
+              {...props}
+              type={Icons.FontAwesome}
+              activeIcon="camera"
+              inActiveIcon="camera"
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -120,24 +125,8 @@ export default function AnimTab() {
             <TabButton
               {...props}
               type={Icons.MaterialCommunityIcons}
-              activeIcon="timeline-plus"
-              inActiveIcon="timeline-plus-outline"
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        key={5}
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarShowLabel: false,
-          tabBarButton: (props) => (
-            <TabButton
-              {...props}
-              type={Icons.FontAwesome}
-              activeIcon="user-circle"
-              inActiveIcon="user-circle-o"
+              activeIcon="history"
+              inActiveIcon="history"
             />
           ),
         }}

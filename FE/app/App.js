@@ -14,7 +14,7 @@ import {
   View,
 } from "react-native";
 import { Provider } from "react-native-paper";
-import AnimTab from "./src/components/navigation/AnimTab";
+import AnimTab from "./src/components/AnimTab";
 import Colors from "./src/constants/Colors";
 import DetailHistory from "./src/screens/HistoryScreens/DetailHistory";
 import DetailScreen from "./src/screens/ListScreens/DetailScreen";
