@@ -166,6 +166,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   ListMushrooms: {
-    marginBottom: 100,
+    marginBottom: 358,
   },
 });

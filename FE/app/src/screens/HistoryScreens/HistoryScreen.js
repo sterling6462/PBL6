@@ -1,8 +1,11 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import CardHistory from "../../components/CardHistory";
 import MyHeader from "../../components/MyHeader";
 import Colors from "../../constants/Colors";
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from "../../device-info";
+import { useStore } from "../../store";
 
 const HistoryData = [
   {
@@ -44,27 +47,27 @@ const HistoryData = [
 ];
 
 const HistoryScreen = ({ route, navigation }) => {
-  // const [data, setData] = useState([]);
-  // setData(HistoryData);
-  // console.log(data);
+  const {token} = useStore()
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://103.197.184.93:8000/api/history`)
-  //     .then((res) => {
-  //       setData(res.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(`Get list mushrooms failed: ${e}`);
-  //     });
-  // }, []);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://hoailinh.online/api/history`, { headers: {"Authorization" : `Bearer ${token}`} })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((e) => {
+        console.log(`Get list mushrooms failed: ${e}`);
+      });
+  }, []);
 
   return (
     <View>
       <MyHeader title={route.name} />
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>
-          {HistoryData.map((item, index) => (
+          {data.map((item, index) => (
             <CardHistory
               item={item}
               id={index}
@@ -83,10 +86,10 @@ export default HistoryScreen;
 const styles = StyleSheet.create({
   viewInner: {
     backgroundColor: Colors.white,
+    
   },
   ScrollView: {
-    marginBottom: 72,
+    marginBottom: 310,
     width: WINDOW_WIDTH,
-    height: WINDOW_HEIGHT,
   },
 });

@@ -3,8 +3,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Surface } from "react-native-paper";
 import { LogoutSvg } from "../assets/Svg";
 import Colors from "../constants/Colors";
+import { useStore } from "../store";
 
-const AppHeader = ({ name = "Addd", title, onLogout }) => {
+const AppHeader = ({ title }) => {
+  const {username, logout} = useStore()
   const LeftView = () => (
     <View style={styles.leftView}>
       <View style={{ flexDirection: "row" }}>
@@ -20,7 +22,7 @@ const AppHeader = ({ name = "Addd", title, onLogout }) => {
           }}
         >
           {" "}
-          {name}
+          {username}
         </Text>
       </View>
       <Text
@@ -36,7 +38,7 @@ const AppHeader = ({ name = "Addd", title, onLogout }) => {
   );
   const RightView = () => (
     <View style={[styles.view, styles.rightView]}>
-      <TouchableOpacity onPress={onLogout}>
+      <TouchableOpacity onPress={()=>logout()}>
         <LogoutSvg width={32} height={32} color={Colors.primaryDark} />
       </TouchableOpacity>
     </View>

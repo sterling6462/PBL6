@@ -121,6 +121,7 @@ export default function AnimTab() {
         component={HistoryScreen}
         options={{
           tabBarShowLabel: false,
+          unmountOnBlur: true,
           tabBarButton: (props) => (
             <TabButton
               {...props}

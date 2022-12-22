@@ -14,35 +14,24 @@ import {
   View,
 } from "react-native";
 import { Provider } from "react-native-paper";
+
 import AnimTab from "./src/components/AnimTab";
 import Colors from "./src/constants/Colors";
 import DetailHistory from "./src/screens/HistoryScreens/DetailHistory";
 import DetailScreen from "./src/screens/ListScreens/DetailScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
+import { useStore } from "./src/store";
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";
   const [loaded, setLoaded] = useState(false);
-  const [isLoggedin, setLogged] = useState(false);
+  const {isLogged} = useStore()
 
   const backgroundStyle = {
     flex: 1,
     backgroundColor: isDarkMode ? Colors.black : Colors.white,
   };
-
-  const detectLogin = async () => {
-    const access = await AsyncStorage.getItem("access");
-    if (access) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  };
-
-  useEffect(() => {
-    detectLogin();
-  }, []);
 
   if (loaded == false)
     return (
@@ -67,7 +56,7 @@ export default function App() {
             backgroundColor={Colors.white}
           />
           <NavigationContainer>
-            <RootStack />
+          {isLogged ? <AnimTab /> : <RootStack />}
           </NavigationContainer>
         </SafeAreaView>
       </Provider>
