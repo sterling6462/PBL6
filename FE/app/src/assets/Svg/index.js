@@ -35,3 +35,45 @@ export const CameraSvg = ({
     </Svg>
   );
 };
+
+export const LogoutSvg = ({
+  color = "#192A3E",
+  width = 24,
+  height = 24,
+
+  ...props
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Rect width={width} height={height} fill="white" fillOpacity={0.01} />
+      <Path
+        d="M23.9917 6L6 6L6 42H24"
+        stroke={color}
+        strokeWidth={4}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M33 33L42 24L33 15"
+        stroke={color}
+        strokeWidth={4}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M16 23.9917H42"
+        stroke={color}
+        strokeWidth={4}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};

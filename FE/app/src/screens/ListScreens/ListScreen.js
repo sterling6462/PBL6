@@ -23,11 +23,7 @@ const ListScreen = (props) => {
 
   return (
     <View style={Styles.container}>
-      <MyHeader
-        menu
-        onPressMenu={() => navigation.goBack()}
-        title={route.name}
-      />
+      <MyHeader title={route.name} />
 
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>
@@ -47,7 +43,7 @@ const ListScreen = (props) => {
 
 const styles = StyleSheet.create({
   viewInner: {
-    backgroundColor: Colors.bag12Bg,
+    backgroundColor: Colors.white,
     flex: 1,
   },
   ScrollView: {
