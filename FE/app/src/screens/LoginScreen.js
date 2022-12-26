@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,27 +9,31 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import LoginSVG from "../assets/Svg/login.svg";
-import Colors from "../constants/Colors";
-import {useState} from "react";
 import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
-import {useStore} from "../store";
+import Colors from "../constants/Colors";
+import { useStore } from "../store";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [hide, setHide] = useState(true);
 
-  const {login, error} = useStore();
+  const { login, error, isLogged } = useStore();
+
+  if (isLogged) {
+    navigation.navigate("Tab");
+    return;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{paddingHorizontal: 25}}>
-        <View style={{alignItems: "center"}}>
+      <View style={{ paddingHorizontal: 25 }}>
+        <View style={{ alignItems: "center" }}>
           <LoginSVG
             height={300}
             width={300}
-            style={{transform: [{rotate: "-5deg"}]}}
+            style={{ transform: [{ rotate: "-5deg" }] }}
           />
         </View>
         <Text style={styles.textLogin}>Login</Text>
@@ -40,7 +45,7 @@ const LoginScreen = ({navigation}) => {
               name="alternate-email"
               size={20}
               color={Colors.darkGray}
-              style={{marginRight: 5}}
+              style={{ marginRight: 5 }}
             />
           }
           keyboardType="email-address"
@@ -54,7 +59,7 @@ const LoginScreen = ({navigation}) => {
               name="ios-lock-closed-outline"
               size={20}
               color={Colors.darkGray}
-              style={{marginRight: 5}}
+              style={{ marginRight: 5 }}
             />
           }
           fieldButtonLabel={hide ? `show` : `hide`}
@@ -71,12 +76,14 @@ const LoginScreen = ({navigation}) => {
             marginTop: -10,
           }}
         >
-          {error && <Text style={{color: "red"}}>{error}</Text>}
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
         <CustomButton
           label={"Login"}
-          onPress={() => {
-            login({username, password});
+          onPress={async () => {
+            await login({ username, password });
+            setUsername("");
+            setPassword("");
           }}
         />
         <View style={styles.transRegister}>
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     marginBottom: 30,
   },
-  textRegister: {color: Colors.primary, fontWeight: "700"},
+  textRegister: { color: Colors.primary, fontWeight: "700" },
   transRegister: {
     flexDirection: "row",
     justifyContent: "center",

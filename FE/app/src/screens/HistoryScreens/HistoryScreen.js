@@ -13,6 +13,11 @@ const HistoryScreen = ({ route, navigation }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    getList();
+    // deleteHistory();
+  }, []);
+
+  const getList = () => {
     axios
       .get(`http://hoailinh.online/api/history`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -23,7 +28,22 @@ const HistoryScreen = ({ route, navigation }) => {
       .catch((e) => {
         console.log(`Get list mushrooms failed: ${e}`);
       });
-  }, []);
+  };
+
+  const deleteHistory = (id) => {
+    console.log(id);
+    axios
+      .delete(`http://hoailinh.online/api/history`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: { id: id },
+      })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((e) => {
+        console.log(`Get list mushrooms failed: ${e}`);
+      });
+  };
 
   return (
     <View>
@@ -36,6 +56,9 @@ const HistoryScreen = ({ route, navigation }) => {
               id={index}
               key={index}
               navigation={navigation}
+              onPress={() => {
+                deleteHistory(item.id);
+              }}
             />
           ))}
         </ScrollView>

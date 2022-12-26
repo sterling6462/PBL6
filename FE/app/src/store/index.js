@@ -6,7 +6,7 @@ export const useStore = create((set) => ({
   username: null,
   token: null,
   error: null,
-  login: async ({username, password}) => {
+  login: async ({ username, password }) => {
     axios
       .post(`http://hoailinh.online/api/login`, {
         username,

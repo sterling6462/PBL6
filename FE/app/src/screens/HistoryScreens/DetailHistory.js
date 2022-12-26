@@ -12,7 +12,6 @@ import Colors from "../../constants/Colors";
 
 const DetailHistory = ({ route, navigation }) => {
   const item = route.params;
-  console.log(item);
 
   return (
     <SafeAreaView

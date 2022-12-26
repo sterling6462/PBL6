@@ -1,8 +1,9 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { DeleteSvg } from "../assets/Svg";
 import Colors from "../constants/Colors";
 
 const CardHistory = (props) => {
-  const { item, navigation } = props;
+  const { item, navigation, onPress } = props;
 
   return (
     <TouchableOpacity
@@ -22,6 +23,10 @@ const CardHistory = (props) => {
         <Text style={styles.accuracy}>{`${item.accuracy}`} %</Text>
         <Text style={styles.date}>{item.date}</Text>
       </View>
+
+      <TouchableOpacity onPress={onPress}>
+        <DeleteSvg width={32} height={32} color={Colors.primary} />
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };

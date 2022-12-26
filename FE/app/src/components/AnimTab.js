@@ -7,6 +7,7 @@ import HistoryScreen from "../screens/HistoryScreens/HistoryScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ListScreen from "../screens/ListScreens/ListScreen";
 import { ScanMushroomScreen } from "../screens/ScanMushroomsScreen";
+import { useStore } from "../store";
 import Icon, { Icons } from "./Icons";
 
 const Tab = createBottomTabNavigator();
@@ -52,7 +53,13 @@ const TabButton = (props) => {
   );
 };
 
-export default function AnimTab() {
+export default function AnimTab({ navigation }) {
+  const { isLogged } = useStore();
+
+  if (!isLogged) {
+    navigation.navigate("LoginScreen");
+    return;
+  }
   return (
     <Tab.Navigator
       screenOptions={{

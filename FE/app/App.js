@@ -55,7 +55,7 @@ export default function App() {
             backgroundColor={Colors.white}
           />
           <NavigationContainer>
-            {isLogged ? <AnimTab /> : <RootStack />}
+            <RootStack />
           </NavigationContainer>
         </SafeAreaView>
       </Provider>
@@ -72,6 +72,7 @@ const screenOptions = {
 const Stack = createStackNavigator();
 
 const RootStack = () => {
+  const { isLogged } = useStore();
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
