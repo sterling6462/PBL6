@@ -1,6 +1,5 @@
-import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -9,18 +8,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {ActivityIndicator, Button} from "react-native-paper";
-import {WINDOW_WIDTH} from "../device-info";
-import {useStore} from "../store";
+import { ActivityIndicator, Button } from "react-native-paper";
+import Colors from "../constants/Colors";
+import { WINDOW_WIDTH } from "../device-info";
+import { useStore } from "../store";
 
-export const ScanMushroomScreen = ({route, navigation}) => {
+export const ScanMushroomScreen = ({ route, navigation }) => {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(Boolean);
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
   const [predictResult, setPredictResult] = useState();
   const [imageUrl, setImageUrl] = useState();
 
-  const {token} = useStore();
+  const { token } = useStore();
 
   useEffect(() => {
     (async () => {
@@ -30,7 +30,7 @@ export const ScanMushroomScreen = ({route, navigation}) => {
   }, []);
 
   const openCamera = async () => {
-    let result = await ImagePicker.launchCameraAsync({base64: true});
+    let result = await ImagePicker.launchCameraAsync({ base64: true });
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -107,7 +107,7 @@ export const ScanMushroomScreen = ({route, navigation}) => {
         "content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({image: image}),
+      body: JSON.stringify({ image: image }),
     })
       .then((response) => response.json())
       .then((json) => {
@@ -125,7 +125,7 @@ export const ScanMushroomScreen = ({route, navigation}) => {
   }
 
   return (
-    <ImageBackground source={require("../assets/Home.png")} style={{flex: 1}}>
+    <ImageBackground source={require("../assets/Home.png")} style={{ flex: 1 }}>
       <View style={styles.container}>
         <Text style={styles.title}>Mushroom Classification</Text>
         <View style={styles.shadow}>
@@ -139,12 +139,12 @@ export const ScanMushroomScreen = ({route, navigation}) => {
                   <Text style={styles.x}>x</Text>
                 </TouchableOpacity>
               )}
-              <Image source={{uri: image}} style={styles.image} />
+              <Image source={{ uri: image }} style={styles.image} />
             </View>
           ) : (
             <Image
               source={require("../assets/image-icon.png")}
-              style={{width: 120, height: 120}}
+              style={{ width: 120, height: 120 }}
             />
           )}
         </View>
@@ -153,7 +153,7 @@ export const ScanMushroomScreen = ({route, navigation}) => {
             icon="camera"
             mode="contained"
             onPress={() => openCamera()}
-            style={[styles.mRight30, {backgroundColor: "#66AEE8"}]}
+            style={[styles.mRight30, { backgroundColor: "#66AEE8" }]}
           >
             Camera
           </Button>
@@ -161,7 +161,7 @@ export const ScanMushroomScreen = ({route, navigation}) => {
             icon="image-multiple"
             mode="contained"
             onPress={() => pickImage()}
-            style={{backgroundColor: "#99D455"}}
+            style={{ backgroundColor: "#99D455" }}
           >
             Gallery
           </Button>
@@ -171,30 +171,47 @@ export const ScanMushroomScreen = ({route, navigation}) => {
             icon="image-multiple"
             mode="contained"
             onPress={() => Predict(imageUrl)}
-            style={{backgroundColor: "#FFAF69"}}
+            style={{ backgroundColor: "#FFAF69" }}
           >
             Predict
           </Button>
         </View>
         {loading && (
           <ActivityIndicator
-            color="#2269F3"
+            color={Colors.primary}
             size="large"
-            style={{marginTop: 30}}
+            style={{ marginTop: 30 }}
           />
         )}
         {predictResult && !loading && image && (
           <View style={styles.resultContainer}>
-            <Text>Kết quả dự đoán: </Text>
+            <Text
+              style={{
+                fontFamily: "BalsamRegular",
+                fontSize: 20,
+                color: Colors.darkGray1,
+              }}
+            >
+              Result :{" "}
+            </Text>
             <Text style={styles.result}>{predictResult.mushroom.name}</Text>
             <View
               style={{
-                flexDirection: "row",
+                flexDirection: "column",
                 display: "flex",
                 alignItems: "flex-end",
               }}
             >
-              <Text style={{marginBottom: 3}}>Độ chính xác: </Text>
+              <Text
+                style={{
+                  marginBottom: 3,
+                  fontFamily: "BalsamRegular",
+                  fontSize: 20,
+                  color: Colors.darkGray1,
+                }}
+              >
+                Accuracy :
+              </Text>
               <Text style={styles.confidence}>
                 {(predictResult.confidence * 100).toFixed(2)} %
               </Text>
@@ -213,12 +230,13 @@ const styles = StyleSheet.create({
   title: {
     width: WINDOW_WIDTH - 50,
     marginTop: 30,
-    fontSize: 33,
-    color: "#fff",
+    fontSize: 30,
+    color: Colors.white,
     letterSpacing: 0,
+    fontFamily: "BalsamBold",
   },
-  buttonContainer: {flexDirection: "row", marginTop: 25, marginBottom: 15},
-  mRight30: {marginRight: 30},
+  buttonContainer: { flexDirection: "row", marginTop: 25, marginBottom: 15 },
+  mRight30: { marginRight: 30 },
   image: {
     width: 370,
     height: 250,
@@ -235,9 +253,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  resultContainer: {marginTop: 30, alignItems: "center"},
-  result: {fontSize: 30},
-  confidence: {fontSize: 25},
+  resultContainer: { marginTop: 30, alignItems: "center" },
+  result: {
+    fontSize: 30,
+    color: Colors.primaryDark,
+  },
+  confidence: {
+    fontSize: 25,
+    fontFamily: "BalsamRegular",
+    color: Colors.primaryDark,
+  },
   close: {
     width: 35,
     height: 35,
@@ -252,5 +277,5 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     zIndex: 99,
   },
-  x: {fontSize: 23, fontWeight: "600", marginTop: -5, color: "white"},
+  x: { fontSize: 23, fontWeight: "600", marginTop: -5, color: "white" },
 });

@@ -23,7 +23,7 @@ const ListScreen = (props) => {
 
   return (
     <View style={Styles.container}>
-      <MyHeader title={route.name} />
+      <MyHeader infoUser title={route.name} />
 
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>

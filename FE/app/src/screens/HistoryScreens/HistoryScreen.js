@@ -9,7 +9,6 @@ import { useStore } from "../../store";
 
 const HistoryScreen = ({ route, navigation }) => {
   const { token } = useStore();
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const HistoryScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <MyHeader title={route.name} />
+      <MyHeader infoUser title={route.name} />
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>
           {data.map((item, index) => (

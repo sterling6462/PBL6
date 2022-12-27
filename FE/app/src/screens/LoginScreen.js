@@ -12,19 +12,15 @@ import LoginSVG from "../assets/Svg/login.svg";
 import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
 import Colors from "../constants/Colors";
-import { useStore } from "../store";
+import { useFontCustom, useStore } from "../store";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [hide, setHide] = useState(true);
 
-  const { login, error, isLogged } = useStore();
-
-  if (isLogged) {
-    navigation.navigate("Tab");
-    return;
-  }
+  const { login, error } = useStore();
+  const fontLoaded = useFontCustom();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,7 +32,8 @@ const LoginScreen = ({ navigation }) => {
             style={{ transform: [{ rotate: "-5deg" }] }}
           />
         </View>
-        <Text style={styles.textLogin}>Login</Text>
+        {fontLoaded ? <Text style={styles.textLogin}>Login</Text> : <></>}
+
         <InputField
           value={username}
           label={"Username"}
@@ -86,14 +83,19 @@ const LoginScreen = ({ navigation }) => {
             setPassword("");
           }}
         />
-        <View style={styles.transRegister}>
-          <Text>Do not have an account?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("RegisterScreen")}
-          >
-            <Text style={styles.textRegister}> Register</Text>
-          </TouchableOpacity>
-        </View>
+
+        {fontLoaded && (
+          <View style={styles.transRegister}>
+            <Text style={{ fontFamily: "BalsamRegular" }}>
+              Do not have an account?
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RegisterScreen")}
+            >
+              <Text style={styles.textRegister}> Register</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -107,12 +109,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textLogin: {
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: "500",
     color: Colors.primary,
     marginBottom: 30,
+    fontFamily: "Pacific",
   },
-  textRegister: { color: Colors.primary, fontWeight: "700" },
+  textRegister: {
+    color: Colors.primary,
+    fontWeight: "700",
+    fontFamily: "BalsamBold",
+  },
   transRegister: {
     flexDirection: "row",
     justifyContent: "center",

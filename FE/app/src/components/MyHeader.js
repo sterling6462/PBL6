@@ -1,52 +1,110 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Surface } from "react-native-paper";
-import { LogoutSvg } from "../assets/Svg";
+import { BackArrowSvg, LogoutSvg } from "../assets/Svg";
 import Colors from "../constants/Colors";
-import { useStore } from "../store";
+import { useFontCustom, useStore } from "../store";
 
-const AppHeader = ({ title }) => {
-  const {username, logout} = useStore()
-  const LeftView = () => (
+const LeftView = (props) => {
+  const { infoUser, userName, title, detailTitle, navigation } = props;
+
+  return (
     <View style={styles.leftView}>
-      <View style={{ flexDirection: "row" }}>
-        <Text style={{ fontSize: 25, fontWeight: "bold", marginBottom: 10 }}>
-          Xin chào
-        </Text>
-        <Text
+      {infoUser && (
+        <View style={{ flexDirection: "column" }}>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textName}>Hi </Text>
+            <Text
+              style={[styles.textName, { color: Colors.label, width: 100 }]}
+            >
+              {userName}
+            </Text>
+          </View>
+
+          <View>
+            <Text
+              style={{
+                fontSize: 15,
+                fontFamily: "BalsamRegular",
+              }}
+            >
+              Welcome to Mushroom Classification App !
+            </Text>
+          </View>
+        </View>
+      )}
+
+      {title && (
+        <View>
+          <Text
+            style={{
+              fontSize: 22,
+              color: Colors.primary,
+              fontFamily: "BalsamBold",
+            }}
+          >
+            {title} Screen
+          </Text>
+        </View>
+      )}
+      {detailTitle && (
+        <View
           style={{
-            fontSize: 25,
-            fontWeight: "bold",
-            marginBottom: 10,
-            color: Colors.label,
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: -20,
           }}
         >
-          {" "}
-          {username}
-        </Text>
-      </View>
-      <Text
-        style={{
-          fontSize: 30,
-          color: Colors.primaryDark,
-          fontWeight: "bold",
-        }}
-      >
-        {title} Screen
-      </Text>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{ width: 40, marginLeft: -30 }}
+          >
+            <BackArrowSvg width={30} height={30} color={Colors.primaryDark} />
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 22,
+              color: Colors.primaryDark,
+              fontFamily: "BalsamBold",
+              marginTop: -5,
+            }}
+          >
+            {detailTitle} Screen
+          </Text>
+        </View>
+      )}
     </View>
   );
-  const RightView = () => (
+};
+
+const RightView = ({ logout }) => {
+  return (
     <View style={[styles.view, styles.rightView]}>
-      <TouchableOpacity onPress={()=>logout()}>
-        <LogoutSvg width={32} height={32} color={Colors.primaryDark} />
-      </TouchableOpacity>
+      {logout && (
+        <TouchableOpacity onPress={() => logout()}>
+          <LogoutSvg width={28} height={28} color={Colors.primaryDark} />
+        </TouchableOpacity>
+      )}
     </View>
   );
+};
+
+const AppHeader = (props) => {
+  const { title, detailTitle, infoUser, navigation } = props;
+  const { username, logout, backButton } = useStore();
+
+  const fontLoaded = useFontCustom();
 
   return (
     <Surface style={styles.header}>
-      <LeftView />
+      <LeftView
+        infoUser={infoUser}
+        userName={username}
+        title={title}
+        detailTitle={detailTitle}
+        backButton={backButton}
+        navigation={navigation}
+      />
       <RightView />
     </Surface>
   );
@@ -72,6 +130,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   leftView: {
-    paddingTop: 10,
+    justifyContent: "flex-start",
+  },
+  textName: {
+    fontSize: 22,
+    fontFamily: "Pacific",
   },
 });

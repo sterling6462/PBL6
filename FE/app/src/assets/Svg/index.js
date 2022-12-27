@@ -108,3 +108,34 @@ export const DeleteSvg = ({
     </Svg>
   );
 };
+
+export const BackArrowSvg = ({
+  color = "#192A3E",
+  width = 24,
+  height = 24,
+
+  ...props
+}) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <G clipPath="url(#clip0_13_3550)">
+        <Path
+          d="M19.0005 11.0007H7.83047L12.7105 6.1207C13.1005 5.7307 13.1005 5.0907 12.7105 4.7007C12.3205 4.3107 11.6905 4.3107 11.3005 4.7007L4.71047 11.2907C4.32047 11.6807 4.32047 12.3107 4.71047 12.7007L11.3005 19.2907C11.6905 19.6807 12.3205 19.6807 12.7105 19.2907C13.1005 18.9007 13.1005 18.2707 12.7105 17.8807L7.83047 13.0007H19.0005C19.5505 13.0007 20.0005 12.5507 20.0005 12.0007C20.0005 11.4507 19.5505 11.0007 19.0005 11.0007Z"
+          fill={color}
+        />
+      </G>
+      <Defs>
+        <ClipPath id="clip0_13_3550">
+          <Rect width={width} height={height} fill="white" />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  );
+};

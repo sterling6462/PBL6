@@ -65,4 +65,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: Colors.darkGray1,
   },
+  date: {
+    color: Colors.darkGray1,
+    fontFamily: "BalsamRegular",
+  },
+  accuracy: {
+    color: Colors.primaryDark,
+    fontFamily: "BalsamBold",
+  },
 });

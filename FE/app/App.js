@@ -55,7 +55,7 @@ export default function App() {
             backgroundColor={Colors.white}
           />
           <NavigationContainer>
-            <RootStack />
+            {isLogged ? <RootStack /> : <AuthStack />}
           </NavigationContainer>
         </SafeAreaView>
       </Provider>
@@ -72,19 +72,8 @@ const screenOptions = {
 const Stack = createStackNavigator();
 
 const RootStack = () => {
-  const { isLogged } = useStore();
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RegisterScreen"
-        component={RegisterScreen}
-        options={{ headerShown: false }}
-      />
       <Stack.Screen
         name="Tab"
         component={AnimTab}
@@ -98,6 +87,23 @@ const RootStack = () => {
       <Stack.Screen
         name="DetailHistory"
         component={DetailHistory}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStack = () => {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -2,6 +2,7 @@ import React from "react";
 import {
   ImageBackground,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -17,27 +18,29 @@ const DetailScreen = ({ route, navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "#ffff",
+        backgroundColor: Colors.white,
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <MyHeader title={route.name} />
+      <MyHeader detailTitle="Detail Mushroom" navigation={navigation} />
       <ImageBackground
         style={{
           flex: 0.7,
-          width: 350,
-          height: 350,
+          width: 320,
+          height: 320,
+          marginTop: -30,
         }}
         source={{ uri: item.image }}
       >
         <View style={style.imageDetails}>
           <Text
             style={{
-              fontSize: 30,
+              fontSize: 22,
               fontWeight: "bold",
               color: Colors.label,
               marginBottom: 20,
+              width: "100%",
             }}
           >
             {item.name}
@@ -50,15 +53,18 @@ const DetailScreen = ({ route, navigation }) => {
         </View>
         <Text
           style={{
-            marginTop: -15,
-            fontWeight: "bold",
+            marginTop: -20,
+            marginBottom: 5,
             fontSize: 20,
-            color: Colors.primary,
+            color: Colors.primaryDark,
+            fontFamily: "BalsamBold",
           }}
         >
-          Thông tin chi tiết
+          Detail
         </Text>
-        <Text style={{ marginTop: 20, lineHeight: 22 }}>{item.desc}</Text>
+        <ScrollView>
+          <Text style={{ marginTop: 20, lineHeight: 22 }}>{item.desc}</Text>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
