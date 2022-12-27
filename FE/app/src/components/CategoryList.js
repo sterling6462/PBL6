@@ -26,7 +26,16 @@ const CategoryList = (props) => {
           />
         </View>
         <View style={{ marginHorizontal: 20, alignItems: "center" }}>
-          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "bold",
+              color: Colors.label,
+              alignItems: "center",
+              alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
             {category.name}
           </Text>
         </View>

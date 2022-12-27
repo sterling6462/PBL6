@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import Swiper from "react-native-swiper";
@@ -31,7 +32,7 @@ const HomeScreen = (props) => {
 
   return (
     <>
-      <MyHeader title={route.name} />
+      <MyHeader infoUser title={route.name} logoutButton />
       <SafeAreaView
         style={{
           flex: 1,
@@ -76,15 +77,15 @@ const HomeScreen = (props) => {
               width: "100%",
               alignItems: "center",
               marginTop: 30,
-              marginBottom: 20,
+              marginBottom: 3,
             }}
           >
             <View style={{ width: "70%" }}>
               <Text
                 style={{
-                  fontWeight: "bold",
-                  fontSize: 20,
-                  color: "#585a61",
+                  fontSize: 25,
+                  color: Colors.primary,
+                  fontFamily: "BalsamBold",
                 }}
               >
                 List of mushrooms
@@ -94,20 +95,22 @@ const HomeScreen = (props) => {
               <View
                 style={{
                   backgroundColor: Colors.primary,
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 15,
                   paddingVertical: 5,
                   borderRadius: 15,
                 }}
               >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: 13,
-                    color: "#FFF",
-                  }}
-                >
-                  More
-                </Text>
+                <TouchableOpacity onPress={() => navigation.navigate("List")}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontFamily: "BalsamRegular",
+                    }}
+                  >
+                    More
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -166,6 +169,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   ListMushrooms: {
-    marginBottom: 100,
+    marginBottom: 358,
   },
 });

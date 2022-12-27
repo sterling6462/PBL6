@@ -2,6 +2,7 @@ import React from "react";
 import {
   ImageBackground,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -17,32 +18,37 @@ const DetailHistory = ({ route, navigation }) => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "#ffff",
+        backgroundColor: Colors.white,
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <MyHeader title={route.name} />
+      <MyHeader detailTitle="Detail History" navigation={navigation} />
       <ImageBackground
         style={{
           flex: 0.7,
-          width: 350,
-          height: 350,
+          width: 320,
+          height: 320,
           borderRadius: 8,
+          marginTop: -30,
         }}
         source={{ uri: item.image }}
       >
         <View style={style.imageDetails}>
           <Text
             style={{
-              fontSize: 30,
+              fontSize: 22,
               fontWeight: "bold",
               color: Colors.label,
-              marginBottom: 20,
+              width: "100%",
             }}
           >
             {item.mushroom.name}
           </Text>
+          <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+            <Text style={style.accuracy}>{`${item.accuracy}`} %</Text>
+            <Text style={style.date}>{item.date}</Text>
+          </View>
         </View>
       </ImageBackground>
       <View style={style.detailsContainer}>
@@ -51,17 +57,20 @@ const DetailHistory = ({ route, navigation }) => {
         </View>
         <Text
           style={{
-            marginTop: -15,
-            fontWeight: "bold",
+            marginTop: -20,
+            marginBottom: 5,
             fontSize: 20,
-            color: Colors.primary,
+            color: Colors.primaryDark,
+            fontFamily: "BalsamBold",
           }}
         >
-          Thông tin chi tiết
+          Detail
         </Text>
-        <Text style={{ marginTop: 20, lineHeight: 22 }}>
-          {item.mushroom.desc}
-        </Text>
+        <ScrollView>
+          <Text style={{ marginTop: 20, lineHeight: 22 }}>
+            {item.mushroom.desc}
+          </Text>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -99,7 +108,7 @@ const style = StyleSheet.create({
     padding: 20,
     paddingLeft: 0,
     paddingRight: 0,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
     width: "100%",
     position: "absolute",
@@ -114,6 +123,18 @@ const style = StyleSheet.create({
     paddingHorizontal: 20,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+  },
+  date: {
+    width: "60%",
+    fontSize: 16,
+    color: Colors.darkGray1,
+    fontFamily: "BalsamRegular",
+  },
+  accuracy: {
+    width: "40%",
+    fontSize: 16,
+    color: Colors.primaryDark,
+    fontFamily: "BalsamBold",
   },
 });
 

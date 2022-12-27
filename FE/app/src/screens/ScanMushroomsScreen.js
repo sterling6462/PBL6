@@ -1,5 +1,5 @@
 import * as ImagePicker from "expo-image-picker";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -9,14 +9,18 @@ import {
   View,
 } from "react-native";
 import { ActivityIndicator, Button } from "react-native-paper";
+import Colors from "../constants/Colors";
 import { WINDOW_WIDTH } from "../device-info";
+import { useStore } from "../store";
 
 export const ScanMushroomScreen = ({ route, navigation }) => {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(Boolean);
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState();
-  const viewRef = useRef(null);
+  const [predictResult, setPredictResult] = useState();
+  const [imageUrl, setImageUrl] = useState();
+
+  const { token } = useStore();
 
   useEffect(() => {
     (async () => {
@@ -26,10 +30,35 @@ export const ScanMushroomScreen = ({ route, navigation }) => {
   }, []);
 
   const openCamera = async () => {
-    let result = await ImagePicker.launchCameraAsync();
+    let result = await ImagePicker.launchCameraAsync({ base64: true });
+
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      setResult(undefined);
+      setPredictResult(undefined);
+
+      let base64Img = `data:image/jpg;base64,${result.base64}`;
+
+      //Add your cloud name
+      let apiUrl = "https://api.cloudinary.com/v1_1/dfvudbozd/image/upload";
+
+      let data = {
+        file: base64Img,
+        upload_preset: "skfpid2r",
+      };
+
+      fetch(apiUrl, {
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "POST",
+      })
+        .then(async (r) => {
+          let data = await r.json();
+          console.log(data.secure_url);
+          setImageUrl(data.secure_url);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
@@ -39,37 +68,50 @@ export const ScanMushroomScreen = ({ route, navigation }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      setResult(undefined);
+      setPredictResult(undefined);
+
+      let base64Img = `data:image/jpg;base64,${result.base64}`;
+
+      //Add your cloud name
+      let apiUrl = "https://api.cloudinary.com/v1_1/dfvudbozd/image/upload";
+
+      let data = {
+        file: base64Img,
+        upload_preset: "skfpid2r",
+      };
+
+      fetch(apiUrl, {
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "POST",
+      })
+        .then(async (r) => {
+          let data = await r.json();
+          setImageUrl(data.secure_url);
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   const Predict = (image) => {
     setLoading(true);
-    const formData = new FormData();
-    formData.append(
-      "file",
-      JSON.parse(
-        JSON.stringify({
-          uri: image,
-          type: "image/jpeg",
-          name: "testPhotoName",
-        })
-      )
-    );
-
-    fetch("http://103.197.184.93:8000/api/predict", {
-      method: "post",
-      body: formData,
+    fetch("http://hoailinh.online/api/predict", {
+      method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data; ",
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({ image: image }),
     })
       .then((response) => response.json())
       .then((json) => {
-        setResult(json);
+        setPredictResult(json);
         setLoading(false);
       })
       .catch((err) => {
@@ -128,7 +170,7 @@ export const ScanMushroomScreen = ({ route, navigation }) => {
           <Button
             icon="image-multiple"
             mode="contained"
-            onPress={() => Predict(image)}
+            onPress={() => Predict(imageUrl)}
             style={{ backgroundColor: "#FFAF69" }}
           >
             Predict
@@ -136,17 +178,44 @@ export const ScanMushroomScreen = ({ route, navigation }) => {
         </View>
         {loading && (
           <ActivityIndicator
-            color="#2269F3"
+            color={Colors.primary}
             size="large"
             style={{ marginTop: 30 }}
           />
         )}
-        {result && !loading && image && (
+        {predictResult && !loading && image && (
           <View style={styles.resultContainer}>
-            <Text style={styles.result}>{result.class}</Text>
-            <Text style={styles.confidence}>
-              {(result.confidence * 100).toFixed(2)}%
+            <Text
+              style={{
+                fontFamily: "BalsamRegular",
+                fontSize: 20,
+                color: Colors.darkGray1,
+              }}
+            >
+              Result :{" "}
             </Text>
+            <Text style={styles.result}>{predictResult.mushroom.name}</Text>
+            <View
+              style={{
+                flexDirection: "column",
+                display: "flex",
+                alignItems: "flex-end",
+              }}
+            >
+              <Text
+                style={{
+                  marginBottom: 3,
+                  fontFamily: "BalsamRegular",
+                  fontSize: 20,
+                  color: Colors.darkGray1,
+                }}
+              >
+                Accuracy :
+              </Text>
+              <Text style={styles.confidence}>
+                {(predictResult.confidence * 100).toFixed(2)} %
+              </Text>
+            </View>
           </View>
         )}
       </View>
@@ -160,10 +229,11 @@ const styles = StyleSheet.create({
   },
   title: {
     width: WINDOW_WIDTH - 50,
-    marginTop: 70,
-    fontSize: 33,
-    color: "#fff",
+    marginTop: 30,
+    fontSize: 30,
+    color: Colors.white,
     letterSpacing: 0,
+    fontFamily: "BalsamBold",
   },
   buttonContainer: { flexDirection: "row", marginTop: 25, marginBottom: 15 },
   mRight30: { marginRight: 30 },
@@ -184,8 +254,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   resultContainer: { marginTop: 30, alignItems: "center" },
-  result: { fontSize: 30 },
-  confidence: { fontSize: 25 },
+  result: {
+    fontSize: 30,
+    color: Colors.primaryDark,
+  },
+  confidence: {
+    fontSize: 25,
+    fontFamily: "BalsamRegular",
+    color: Colors.primaryDark,
+  },
   close: {
     width: 35,
     height: 35,

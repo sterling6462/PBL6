@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,41 +9,18 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import LoginSVG from "../assets/Svg/login.svg";
-
-import Colors from "../constants/Colors";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { useState } from "react";
 import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
+import Colors from "../constants/Colors";
+import { useFontCustom, useStore } from "../store";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  // const { login } = useContext(AuthContext);
+  const [hide, setHide] = useState(true);
 
-  const handleLogin = (username, password) => {
-    axios
-      .post(`http://103.197.184.93:8000/api/login`, {
-        username,
-        password,
-      })
-      .then(async (res) => {
-        let userInfo = res.data;
-        navigation.navigate("Tab");
-        // login();
-        // console.log(userInfo.access);
-        try {
-          await AsyncStorage.setItem("access", userInfo.access);
-        } catch (e) {
-          console.log("error hai", e);
-        }
-      })
-      .catch((e) => {
-        console.log(`Register failed: ${e}`);
-      });
-  };
+  const { login, error } = useStore();
+  const fontLoaded = useFontCustom();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,7 +32,8 @@ const LoginScreen = ({ navigation }) => {
             style={{ transform: [{ rotate: "-5deg" }] }}
           />
         </View>
-        <Text style={styles.textLogin}>Login</Text>
+        {fontLoaded ? <Text style={styles.textLogin}>Login</Text> : <></>}
+
         <InputField
           value={username}
           label={"Username"}
@@ -69,7 +48,6 @@ const LoginScreen = ({ navigation }) => {
           keyboardType="email-address"
           onChangeText={(text) => setUsername(text)}
         />
-
         <InputField
           value={password}
           label={"Password"}
@@ -81,27 +59,43 @@ const LoginScreen = ({ navigation }) => {
               style={{ marginRight: 5 }}
             />
           }
-          inputType="password"
-          fieldButtonLabel={"Forgot?"}
-          fieldButtonFunction={() => {}}
+          fieldButtonLabel={hide ? `show` : `hide`}
+          fieldButtonFunction={() => setHide(!hide)}
+          inputType={hide ? `password` : ""}
           onChangeText={(text) => setPassword(text)}
         />
-
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            marginBottom: 10,
+            marginTop: -10,
+          }}
+        >
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
+        </View>
         <CustomButton
           label={"Login"}
-          onPress={() => {
-            handleLogin(username, password);
+          onPress={async () => {
+            await login({ username, password });
+            setUsername("");
+            setPassword("");
           }}
         />
 
-        <View style={styles.transRegister}>
-          <Text>New to the app?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("RegisterScreen")}
-          >
-            <Text style={styles.textRegister}> Register</Text>
-          </TouchableOpacity>
-        </View>
+        {fontLoaded && (
+          <View style={styles.transRegister}>
+            <Text style={{ fontFamily: "BalsamRegular" }}>
+              Do not have an account?
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RegisterScreen")}
+            >
+              <Text style={styles.textRegister}> Register</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -115,12 +109,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textLogin: {
-    fontSize: 28,
+    fontSize: 40,
     fontWeight: "500",
     color: Colors.primary,
     marginBottom: 30,
+    fontFamily: "Pacific",
   },
-  textRegister: { color: Colors.primary, fontWeight: "700" },
+  textRegister: {
+    color: Colors.primary,
+    fontWeight: "700",
+    fontFamily: "BalsamBold",
+  },
   transRegister: {
     flexDirection: "row",
     justifyContent: "center",

@@ -1,11 +1,10 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   CardStyleInterpolators,
   createStackNavigator,
 } from "@react-navigation/stack";
 import AnimatedLottieView from "lottie-react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -14,35 +13,24 @@ import {
   View,
 } from "react-native";
 import { Provider } from "react-native-paper";
+
 import AnimTab from "./src/components/AnimTab";
 import Colors from "./src/constants/Colors";
 import DetailHistory from "./src/screens/HistoryScreens/DetailHistory";
 import DetailScreen from "./src/screens/ListScreens/DetailScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
+import { useStore } from "./src/store";
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";
   const [loaded, setLoaded] = useState(false);
-  const [isLoggedin, setLogged] = useState(false);
+  const { isLogged } = useStore();
 
   const backgroundStyle = {
     flex: 1,
     backgroundColor: isDarkMode ? Colors.black : Colors.white,
   };
-
-  const detectLogin = async () => {
-    const access = await AsyncStorage.getItem("access");
-    if (access) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  };
-
-  useEffect(() => {
-    detectLogin();
-  }, []);
 
   if (loaded == false)
     return (
@@ -67,7 +55,7 @@ export default function App() {
             backgroundColor={Colors.white}
           />
           <NavigationContainer>
-            <RootStack />
+            {isLogged ? <RootStack /> : <AuthStack />}
           </NavigationContainer>
         </SafeAreaView>
       </Provider>
@@ -87,16 +75,6 @@ const RootStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RegisterScreen"
-        component={RegisterScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="Tab"
         component={AnimTab}
         options={{ headerShown: false }}
@@ -109,6 +87,23 @@ const RootStack = () => {
       <Stack.Screen
         name="DetailHistory"
         component={DetailHistory}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStack = () => {
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
