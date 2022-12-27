@@ -46,7 +46,7 @@ const HistoryScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <MyHeader infoUser title={route.name} />
+      <MyHeader infoUser logoutButton title={route.name} />
       <View style={styles.viewInner}>
         <ScrollView style={styles.ScrollView}>
           {data.map((item, index) => (

@@ -32,7 +32,7 @@ const HomeScreen = (props) => {
 
   return (
     <>
-      <MyHeader infoUser title={route.name} />
+      <MyHeader infoUser title={route.name} logoutButton />
       <SafeAreaView
         style={{
           flex: 1,
@@ -77,7 +77,7 @@ const HomeScreen = (props) => {
               width: "100%",
               alignItems: "center",
               marginTop: 30,
-              marginBottom: 20,
+              marginBottom: 3,
             }}
           >
             <View style={{ width: "70%" }}>

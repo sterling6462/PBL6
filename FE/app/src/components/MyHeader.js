@@ -77,10 +77,10 @@ const LeftView = (props) => {
   );
 };
 
-const RightView = ({ logout }) => {
+const RightView = ({ logout, logoutButton }) => {
   return (
     <View style={[styles.view, styles.rightView]}>
-      {logout && (
+      {logoutButton && (
         <TouchableOpacity onPress={() => logout()}>
           <LogoutSvg width={28} height={28} color={Colors.primaryDark} />
         </TouchableOpacity>
@@ -90,7 +90,7 @@ const RightView = ({ logout }) => {
 };
 
 const AppHeader = (props) => {
-  const { title, detailTitle, infoUser, navigation } = props;
+  const { title, detailTitle, infoUser, navigation, logoutButton } = props;
   const { username, logout, backButton } = useStore();
 
   const fontLoaded = useFontCustom();
@@ -105,7 +105,7 @@ const AppHeader = (props) => {
         backButton={backButton}
         navigation={navigation}
       />
-      <RightView />
+      <RightView logout={logout} logoutButton={logoutButton} />
     </Surface>
   );
 };
@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   rightView: {
-    justifyContent: "flex-end",
+    alignContent: "flex-end",
+    justifyContent: "flex-start",
   },
   leftView: {
     justifyContent: "flex-start",
